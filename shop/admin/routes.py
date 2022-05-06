@@ -29,6 +29,16 @@ def brands():
 
     return render_template("admin/brands.html", title="Manage Brands", brands=brands)
 
+@app.route("/categories")
+def categories():
+    if "email" not in session:
+        flash("Please login first!", category="danger")
+
+        return redirect(url_for("login"))
+
+    categories = Category.query.all()
+
+    return render_template("admin/categories.html", title="Manage Categories", categories=categories)
 
 # @app.route("/brands")
 # def brands():
