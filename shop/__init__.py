@@ -13,6 +13,7 @@ base_dir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "python_ecommerce_demo"
 app.config["SQLALCHEMY_DATABASE_URI"] = f"mysql://root:@localhost:3306/{DB_NAME}"
+app.config["UPLOADED_PHOTOS_DEST"] = os.path.join(base_dir, "static/images")
 
 photos = UploadSet("photos", IMAGES)
 
