@@ -45,7 +45,7 @@
             <th>Origins</th>
             <th>Price</th>
             <th>Discount</th>
-            <th colspan="2">Actions</th>
+            <th>Actions</th>
             <!-- <th>Delete</th> -->
         </thead>
         <tbody>
@@ -59,8 +59,8 @@
                 <td>{{ product.origins }}</td>
                 <td>{{ product.price }}</td>
                 <td>{{ product.discount }}%</td>
-                <td><a href="">Edit</a></td>
-                <td><a href="">Delete</a></td>
+                <td><a href="">Edit</a>&nbsp;<a href="">Delete</a></td>
+                <!-- <td><a href="">Delete</a></td> -->
             </tr>
             {% endfor %}
         </tbody>
