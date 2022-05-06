@@ -39,7 +39,7 @@
         <thead>
             <th>No.</th>
             <th>Name</th>
-            <th colspan="2">Actions</th>
+            <th>Actions</th>
             <!-- <th>Delete</th> -->
         </thead>
         <tbody>
@@ -48,8 +48,8 @@
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ brand.name }}</td>
-                <td><a href="">Edit</a></td>
-                <td><a href="">Delete</a></td>
+                <td><a href="" class="btn btn-sm btn-outline-info">Edit</a>&emsp;<a href="" class="btn btn-sm btn-outline-danger">Delete</a></td>
+                <!-- <td><a href="">Delete</a></td> -->
             </tr>
             {% endfor %}
             {% endif %}
