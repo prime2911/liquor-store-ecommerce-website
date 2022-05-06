@@ -23,7 +23,7 @@ def add_brand():
         
         return redirect(url_for("add_brand"))
 
-    return render_template("products/add-brand.html", brands="brands", title="Add Brand")
+    return render_template("products/add-brand.html", title="Add Brand")
 
 @app.route("/add-category", methods=["GET", "POST"])
 def add_category():
@@ -40,9 +40,9 @@ def add_category():
         flash(f"Category \"{category_name}\" added to the database!", category="success")
         db.session.commit()
         
-        return redirect(url_for("add_brand"))
+        return redirect(url_for("add_category"))
 
-    return render_template("products/add-brand.html", title="Add Category")
+    return render_template("products/add-category.html", title="Add Category")
 
 @app.route("/add-product", methods=["GET", "POST"])
 def add_product():
