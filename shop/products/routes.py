@@ -122,3 +122,14 @@ def add_product():
         return redirect(url_for("admin"))
 
     return render_template("products/add-product.html", title="Add Product", form=form, brands=brands, categories=categories)
+
+@app.route("/update-product/<int:id>", methods=["GET", "POST"])
+def update_product(id):
+    if "email" not in session:
+        flash("Please login first!", category="danger")
+
+        return redirect(url_for("login"))
+
+    form = ProductForm(request.form)
+
+    return render_template("products/update-product.html", title="Update Product", form=form)
