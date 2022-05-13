@@ -8,4 +8,4 @@ class ProductForm(Form):
     discount = IntegerField("Discount", default=0)
     stock = IntegerField("Stock", [validators.DataRequired()])
     description = TextAreaField("Description", [validators.DataRequired()])
-    image = FileField("Image", validators=[FileRequired(), FileAllowed(["jpg", "jpeg", "png"])])
+    image = FileField("Image", validators=[FileAllowed(["jpg", "jpeg", "png"])])
