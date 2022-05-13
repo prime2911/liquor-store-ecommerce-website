@@ -25,7 +25,7 @@ def brands():
 
         return redirect(url_for("login"))
 
-    brands = Brand.query.all()
+    brands = Brand.query.order_by(Brand.id.asc()).all()
 
     return render_template("admin/brands.html", title="Manage Brands", brands=brands)
 
@@ -36,7 +36,7 @@ def categories():
 
         return redirect(url_for("login"))
 
-    categories = Category.query.all()
+    categories = Category.query.order_by(Category.id.asc()).all()
 
     return render_template("admin/categories.html", title="Manage Categories", categories=categories)
 
