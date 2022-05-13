@@ -17,11 +17,11 @@
             <br>
             <div class="text-center">
                 <form action="" method="POST">
-                    <input type="text" name="category" class="form-control" value="{{to_update.name}}">
+                    <input type="text" name="category" class="form-control" value="{{ to_update.name }}">
                     <br>
                     <input type="submit" value="Update Category" class="btn btn-info mt-2">
                 </form>
-                <a href="{{url_for('categories')}}" class="btn btn-danger" style="margin-top: 5px;">Cancel</a>
+                <a href="{{ url_for('categories') }}" class="btn btn-danger" style="margin-top: 5px;">Cancel</a>
             </div>
             {% endif %}
         </div>

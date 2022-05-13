@@ -1,3 +1,4 @@
+from unicodedata import category
 from flask import render_template, request, redirect, session, url_for, flash
 import secrets
 
@@ -130,6 +131,34 @@ def update_product(id):
 
         return redirect(url_for("login"))
 
+    brands = Brand.query.all()
+    categories = Category.query.all()
+    product = Product.query.get_or_404(id)
+
+    brand = request.form.get("brand")
+    category = request.form.get("category")
     form = ProductForm(request.form)
 
-    return render_template("products/update-product.html", title="Update Product", form=form)
+    if request.method == "POST":
+        product.name = form.name.data
+        product.origins = form.origins.data
+        product.price = form.price.data
+        product.discount = form.discount.data
+        product.stock = form.stock.data
+        product.desc = form.description.data
+        product.brand_id = brand
+        product.category_id = category
+        db.session.commit()
+        flash("Product Updated!", category="success")
+
+        return redirect("/")
+
+    form.name.data = product.name
+    form.origins.data = product.origins
+    form.price.data = product.price
+    form.discount.data = product.discount
+    form.stock.data = product.stock
+    form.description.data = product.desc
+    form.image.data = product.image
+
+    return render_template("products/update-product.html", title="Update Product", form=form, brands=brands, categories=categories, product=product)

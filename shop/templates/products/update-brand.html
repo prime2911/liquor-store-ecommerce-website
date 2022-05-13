@@ -8,20 +8,15 @@
         <div class="col-md-6">
             {% include "_messages.html" %}
             {% if to_update %}
-            <!-- <div class="text-center h1 mt-5">Update Brand</h1>
-            <form action="" method="POST">
-                <input type="text" name="brand" class="form-control" value="{{to_update.name}}">
-                <input type="submit" value="Update Brand" class="btn btn-info mt-2">
-            </form> -->
             <div class="text-center h1 mt-5">Update Brand</div>
             <br>
             <div class="text-center">
                 <form action="" method="POST">
-                    <input type="text" name="brand" class="form-control" value="{{to_update.name}}">
+                    <input type="text" name="brand" class="form-control" value="{{ to_update.name }}">
                     <br>
                     <input type="submit" value="Update Brand" class="btn btn-info mt-2">
                 </form>
-                <a href="{{url_for('brands')}}" class="btn btn-danger" style="margin-top: 5px;">Cancel</a>
+                <a href="{{ url_for('brands') }}" class="btn btn-danger" style="margin-top: 5px;">Cancel</a>
             </div>
             {% endif %}
         </div>
