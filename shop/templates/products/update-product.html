@@ -27,7 +27,7 @@
         {{ render_field(form.stock, class="form-control", placeholder="Product Stock") }}
         {{ render_field(form.description, class="form-control", placeholder="Product Details") }}
         <!-- {{ render_field(form.image, class="form-control") }} -->
-        <div class="col-md-4"><input type="file" name="image" class="form-control"></div>
+        <div class="col-md-4">{{ render_field(form.image, class="form-control") }}</div>
         <button type="submit" class="btn btn-primary mt-4">Add Product</button>
       </form>
     </div>

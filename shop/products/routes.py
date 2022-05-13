@@ -1,6 +1,6 @@
-from unicodedata import category
-from flask import render_template, request, redirect, session, url_for, flash
-import secrets
+from math import prod
+from flask import render_template, request, redirect, session, url_for, flash, current_app
+import secrets, os
 
 from shop import db, app, photos
 from .models import Brand, Category, Product
@@ -148,6 +148,14 @@ def update_product(id):
         product.desc = form.description.data
         product.brand_id = brand
         product.category_id = category
+
+        if request.files.get("image"):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "static/images" + product.image))
+                product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+            except:
+                product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+
         db.session.commit()
         flash("Product Updated!", category="success")
 

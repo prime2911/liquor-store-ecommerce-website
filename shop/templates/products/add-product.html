@@ -26,7 +26,7 @@
         {{ render_field(form.discount, class="form-control", placeholder="Discount Percentage (Default: 0)") }}
         {{ render_field(form.stock, class="form-control", placeholder="Product Stock") }}
         {{ render_field(form.description, class="form-control", placeholder="Product Details") }}
-        {{ render_field(form.image, class="form-control") }}
+        {{ render_field(form.image, class="form-control", required) }}
         <button type="submit" class="btn btn-primary mt-4">Add Product</button>
       </form>
     </div>
