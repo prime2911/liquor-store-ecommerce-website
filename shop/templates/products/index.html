@@ -60,7 +60,19 @@
                             <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
                         {% endif %}
                         <h5 class="text-center">{{ product.name }}</h5>
-                        <p class="text-center">{{ product.price }}đ</p>
+                        {% if product.discount > 0 %}
+                            <div class="text-center">
+                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                                <!-- <p class="text-center"> -->
+                                    {% set price = product.price | float %}
+                                    {% set discount = product.discount %}
+                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                                <!-- </p> -->
+                            </div>
+                        {% else %}
+                            <div class="text-center">{{ product.price }}đ</div>
+                        {% endif %}
+                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
                     </div>
                     <div class="card-footer">
                         <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
@@ -79,7 +91,19 @@
                             <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
                         {% endif %}
                         <h5 class="text-center">{{ product.name }}</h5>
-                        <p class="text-center">{{ product.price }}đ</p>
+                        {% if product.discount > 0 %}
+                            <div class="text-center">
+                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                                <!-- <p class="text-center"> -->
+                                    {% set price = product.price | float %}
+                                    {% set discount = product.discount %}
+                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                                <!-- </p> -->
+                            </div>
+                        {% else %}
+                            <div class="text-center">{{ product.price }}đ</div>
+                        {% endif %}
+                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
                     </div>
                     <div class="card-footer">
                         <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
@@ -98,7 +122,19 @@
                             <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
                         {% endif %}
                         <h5 class="text-center">{{ product.name }}</h5>
-                        <p class="text-center">{{ product.price }}đ</p>
+                        {% if product.discount > 0 %}
+                            <div class="text-center">
+                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                                <!-- <p class="text-center"> -->
+                                    {% set price = product.price | float %}
+                                    {% set discount = product.discount %}
+                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                                <!-- </p> -->
+                            </div>
+                        {% else %}
+                            <div class="text-center">{{ product.price }}đ</div>
+                        {% endif %}
+                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
                     </div>
                     <div class="card-footer">
                         <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
