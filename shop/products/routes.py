@@ -16,7 +16,7 @@ def home():
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", products=products, brands=brands, categories=categories, items_per_page=items_per_page)
+    return render_template("products/index.html", title="Home Page", products=products, brands=brands, categories=categories, items_per_page=items_per_page)
     
 @app.route("/brands/<int:id>")
 def filter_by_brand(id):
@@ -27,7 +27,7 @@ def filter_by_brand(id):
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", products_by_brand=products, brands=brands, categories=categories, brand=brand, items_per_page=items_per_page)
+    return render_template("products/index.html", title="Home Page", products_by_brand=products, brands=brands, categories=categories, brand=brand, items_per_page=items_per_page)
 
 @app.route("/categories/<int:id>")
 def filter_by_category(id):
@@ -38,7 +38,7 @@ def filter_by_category(id):
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", products_by_category=products, brands=brands, categories=categories, category=category, items_per_page=items_per_page)
+    return render_template("products/index.html", title="Home Page", products_by_category=products, brands=brands, categories=categories, category=category, items_per_page=items_per_page)
 
 @app.route("/add-brand", methods=["GET", "POST"])
 def add_brand():
