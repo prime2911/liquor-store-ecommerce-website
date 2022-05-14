@@ -151,7 +151,7 @@ def update_product(id):
 
         if request.files.get("image"):
             try:
-                os.unlink(os.path.join(current_app.root_path, "static/images" + product.image))
+                os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image))
                 product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
             except:
                 product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
