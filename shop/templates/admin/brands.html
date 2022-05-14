@@ -35,51 +35,52 @@
   </nav>
 </div>
 <div class="container mt-5">
-    <table class="table table-sm table-condensed table-striped table-hover">
-        <thead>
-            <th>No.</th>
-            <th>Name</th>
-            <th>Actions</th>
-            <!-- <th>Delete</th> -->
-        </thead>
-        <tbody>
-            {% if brands %}
-            {% for brand in brands %}
-            <tr>
-                <td>{{ loop.index }}</td>
-                <td>{{ brand.name }}</td>
-                <td>
-                  <a href="{{ url_for('update_brand', id=brand.id) }}" class="btn btn-sm btn-outline-info">Edit</a>&emsp;
-                  <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#promptModal-{{ brand.id }}">
-                    Delete
-                  </button>
-                </td>
-                <div class="modal fade" id="promptModal-{{ brand.id }}" tabindex="-1" role="dialog" aria-labelledby="promptModalLabel" aria-hidden="true">
-                  <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <h5 class="modal-title" id="promptModalLabel">Warning!</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-                      <div class="modal-body">
-                        <span class="text-danger">Are you sure you want to delete this brand: {{brand.name}}?</span>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
-                        <form action="{{ url_for('delete_brand', id=brand.id) }}" method="get">
-                          <button type="button" class="btn btn-sm btn-danger">Delete Brand</button>
-                        </form>
-                      </div>
+  <a href="{{ url_for('add_brand') }}" class="btn btn-sm btn-success mb-3">Add Brand</a>
+  <table class="table table-sm table-condensed table-striped table-hover">
+      <thead>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Actions</th>
+          <!-- <th>Delete</th> -->
+      </thead>
+      <tbody>
+          {% if brands %}
+          {% for brand in brands %}
+          <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ brand.name }}</td>
+              <td>
+                <a href="{{ url_for('update_brand', id=brand.id) }}" class="btn btn-sm btn-outline-info">Edit</a>&emsp;
+                <button type="button" class="btn btn-sm btn-outline-danger" data-toggle="modal" data-target="#promptModal-{{ brand.id }}">
+                  Delete
+                </button>
+              </td>
+              <div class="modal fade" id="promptModal-{{ brand.id }}" tabindex="-1" role="dialog" aria-labelledby="promptModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="promptModalLabel">Warning!</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <span class="text-danger">Are you sure you want to delete this brand: {{brand.name}}?</span>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
+                      <form action="{{ url_for('delete_brand', id=brand.id) }}" method="get">
+                        <button type="button" class="btn btn-sm btn-danger">Delete Brand</button>
+                      </form>
                     </div>
                   </div>
                 </div>
-            </tr>
-            {% endfor %}
-            {% endif %}
-        </tbody>
-    </table>
+              </div>
+          </tr>
+          {% endfor %}
+          {% endif %}
+      </tbody>
+  </table>
 </div>
 
 {% endblock %}
