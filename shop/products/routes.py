@@ -45,6 +45,26 @@ def update_brand(id):
 
     return render_template("products/update-brand.html", title="Update Brand", to_update=to_update)
 
+@app.route("/delete-brand/<int:id>", methods=["POST"])
+def delete_brand(id):
+    if "email" not in session:
+        flash("Please login first!", category="danger")
+
+        return redirect(url_for("login"))
+    
+    to_delete = Brand.query.get_or_404(id)
+
+    if request.method == "POST":
+        db.session.delete(to_delete)
+        flash("Brand deleted!", category="success")
+        db.session.commit()
+
+        return redirect(url_for("admin"))
+
+    flash("Delete unsuccessful!", category="danger")
+
+    return redirect(url_for("admin"))
+
 @app.route("/add-category", methods=["GET", "POST"])
 def add_category():
     if "email" not in session:
@@ -82,6 +102,26 @@ def update_category(id):
         return redirect(url_for("categories"))
 
     return render_template("products/update-category.html", title="Update Category", to_update=to_update)
+
+@app.route("/delete-category/<int:id>", methods=["POST"])
+def delete_category(id):
+    if "email" not in session:
+        flash("Please login first!", category="danger")
+
+        return redirect(url_for("login"))
+    
+    to_delete = Category.query.get_or_404(id)
+
+    if request.method == "POST":
+        db.session.delete(to_delete)
+        flash("Category deleted!", category="success")
+        db.session.commit()
+
+        return redirect(url_for("admin"))
+
+    flash("Delete unsuccessful!", category="danger")
+
+    return redirect(url_for("admin"))
 
 @app.route("/add-product", methods=["GET", "POST"])
 def add_product():
@@ -157,9 +197,9 @@ def update_product(id):
                 product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
 
         db.session.commit()
-        flash("Product Updated!", category="success")
+        flash("Product updated!", category="success")
 
-        return redirect("/")
+        return redirect(url_for("admin"))
 
     form.name.data = product.name
     form.origins.data = product.origins
@@ -170,3 +210,28 @@ def update_product(id):
     form.image.data = product.image
 
     return render_template("products/update-product.html", title="Update Product", form=form, brands=brands, categories=categories, product=product)
+
+@app.route("/delete-product/<int:id>", methods=["POST"])
+def delete_product(id):
+    if "email" not in session:
+        flash("Please login first!", category="danger")
+
+        return redirect(url_for("login"))
+
+    product = Product.query.get_or_404(id)
+
+    if request.method == "POST":
+        try:
+            os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image))
+        except Exception as e:
+            print(e)
+
+        db.session.delete(product)
+        db.session.commit()
+        flash("Product deleted!", category="success")
+
+        return redirect(url_for("admin"))
+
+    flash("Delete unsuccessful!", category="danger")
+
+    return redirect(url_for("admin"))
