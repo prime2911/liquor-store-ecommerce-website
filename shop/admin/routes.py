@@ -6,7 +6,7 @@ from .models import User
 from shop.products.models import Product, Brand, Category
 
 
-@app.route("/")
+@app.route("/admin")
 def admin():
     if "email" not in session:
         flash("Please login first!", category="danger")
@@ -39,18 +39,6 @@ def categories():
     categories = Category.query.order_by(Category.id.asc()).all()
 
     return render_template("admin/categories.html", title="Manage Categories", categories=categories)
-
-# @app.route("/brands")
-# def brands():
-#     if "email" not in session:
-#         flash("Please login first!", category="danger")
-
-#         return redirect(url_for("login"))
-
-#     brands = Brand.query.order_by(Brand.id.desc()).all()
-
-#     return render_template("admin/brands.html", title="Manage Brands", brands=brands)
-
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
