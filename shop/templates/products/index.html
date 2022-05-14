@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Home</a>
+        <a class="navbar-brand" href="{{ url_for('home') }}">Home</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -14,17 +14,26 @@
                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="{{ url_for('home') }}">Products</a>
             </li>
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
+                    Brands
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
+                    {% for brand in brands %}
+                        <a class="dropdown-item" href="{{ url_for('filter_by_brand', id=brand.id) }}">{{brand.name}}</a>
+                    {% endfor %}
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Categories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    {% for category in categories %}
+                        <a class="dropdown-item" href="{{ url_for('filter_by_category', id=category.id) }}">{{category.name}}</a>
+                    {% endfor %}
                 </div>
             </li>
             <li class="nav-item">
@@ -41,24 +50,64 @@
 
 <div class="container">
     <div class="row">
-        {% for product in products %}
-        <div class="col-md-3 mt-3">
-            <div class="card">
-                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
-                <div class="card-body">
-                    {% if product.discount > 0 %}
-                        <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{product.discount }}% Off!&nbsp;</h6>
-                    {% endif %}
-                    <h5 class="text-center">{{ product.name }}</h5>
-                    <p class="text-center">{{ product.price }}đ</p>
-                </div>
-                <div class="card-footer">
-                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
-                    <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+        {% if products_by_brand %}
+            {% for product in products_by_brand %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                    <div class="card-body">
+                        {% if product.discount > 0 %}
+                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                        {% endif %}
+                        <h5 class="text-center">{{ product.name }}</h5>
+                        <p class="text-center">{{ product.price }}đ</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
+        {% elif products_by_category %}
+            {% for product in products_by_category %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                    <div class="card-body">
+                        {% if product.discount > 0 %}
+                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                        {% endif %}
+                        <h5 class="text-center">{{ product.name }}</h5>
+                        <p class="text-center">{{ product.price }}đ</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            {% for product in products %}
+            <div class="col-md-3 mt-3">
+                <div class="card">
+                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                    <div class="card-body">
+                        {% if product.discount > 0 %}
+                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                        {% endif %}
+                        <h5 class="text-center">{{ product.name }}</h5>
+                        <p class="text-center">{{ product.price }}đ</p>
+                    </div>
+                    <div class="card-footer">
+                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
     </div>
 </div>
 {% endblock %}

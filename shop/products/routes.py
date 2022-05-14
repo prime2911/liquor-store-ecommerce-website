@@ -9,8 +9,26 @@ from .forms import ProductForm
 @app.route("/")
 def home():
     products = Product.query.filter(Product.stock > 0)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    return render_template("products/index.html", products=products, brands=brands, categories=categories)
     
-    return render_template("products/index.html", products=products)
+@app.route("/brands/<int:id>")
+def filter_by_brand(id):
+    products = Product.query.filter_by(brand_id = id)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    return render_template("products/index.html", products_by_brand=products, brands=brands, categories=categories)
+
+@app.route("/categories/<int:id>")
+def filter_by_category(id):
+    products = Product.query.filter_by(category_id = id)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    return render_template("products/index.html", products_by_category=products, brands=brands, categories=categories)
 
 @app.route("/add-brand", methods=["GET", "POST"])
 def add_brand():
