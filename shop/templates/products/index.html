@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for brand in brands %}
-                        <a class="dropdown-item" href="{{ url_for('filter_by_brand', id=brand.id) }}">{{brand.name}}</a>
+                    <a class="dropdown-item" href="{{ url_for('filter_by_brand', id=brand.id) }}">{{brand.name}}</a>
                     {% endfor %}
                 </div>
             </li>
@@ -32,7 +32,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for category in categories %}
-                        <a class="dropdown-item" href="{{ url_for('filter_by_category', id=category.id) }}">{{category.name}}</a>
+                    <a class="dropdown-item" href="{{ url_for('filter_by_category', id=category.id) }}">{{category.name}}</a>
                     {% endfor %}
                 </div>
             </li>
@@ -64,9 +64,9 @@
                     <div class="text-center">
                         <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
                         <!-- <p class="text-center"> -->
-                            {% set price = product.price | float %}
-                            {% set discount = product.discount %}
-                            {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                        {% set price = product.price | float %}
+                        {% set discount = product.discount %}
+                        {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
                         <!-- </p> -->
                     </div>
                     {% else %}
@@ -75,7 +75,7 @@
                     <!-- <p class="text-center">{{ product.price }}đ</p> -->
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="{{ url_for('product_details', id=product.id) }}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
                 </div>
             </div>
@@ -131,7 +131,7 @@
                     <!-- <p class="text-center">{{ product.price }}đ</p> -->
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="{{ url_for('product_details', id=product.id) }}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
                 </div>
             </div>
@@ -187,7 +187,7 @@
                     <!-- <p class="text-center">{{ product.price }}đ</p> -->
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="{{ url_for('product_details', id=product.id) }}" class="float-left btn btn-sm btn-primary">Details</a>
                     <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
                 </div>
             </div>
@@ -218,6 +218,5 @@
         </div>
     </div>
     {% endif %}
-    </div>
 </div>
 {% endblock %}
