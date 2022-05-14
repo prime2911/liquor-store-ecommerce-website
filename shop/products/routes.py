@@ -1,4 +1,3 @@
-from math import prod
 from flask import render_template, request, redirect, session, url_for, flash, current_app
 import secrets, os
 
@@ -6,6 +5,12 @@ from shop import db, app, photos
 from .models import Brand, Category, Product
 from .forms import ProductForm
 
+
+@app.route("/")
+def home():
+    products = Product.query.filter(Product.stock > 0)
+    
+    return render_template("products/index.html", products=products)
 
 @app.route("/add-brand", methods=["GET", "POST"])
 def add_brand():
