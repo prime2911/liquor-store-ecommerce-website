@@ -50,100 +50,174 @@
 
 <div class="container">
     <div class="row">
-        {% if products_by_brand %}
-            {% for product in products_by_brand %}
-            <div class="col-md-3 mt-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
-                    <div class="card-body">
-                        {% if product.discount > 0 %}
-                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
-                        {% endif %}
-                        <h5 class="text-center">{{ product.name }}</h5>
-                        {% if product.discount > 0 %}
-                            <div class="text-center">
-                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
-                                <!-- <p class="text-center"> -->
-                                    {% set price = product.price | float %}
-                                    {% set discount = product.discount %}
-                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
-                                <!-- </p> -->
-                            </div>
-                        {% else %}
-                            <div class="text-center">{{ product.price }}đ</div>
-                        {% endif %}
-                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
+    {% if products_by_brand %}
+        {% for product in products_by_brand.items %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                <div class="card-body">
+                    {% if product.discount > 0 %}
+                    <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                    {% endif %}
+                    <h5 class="text-center">{{ product.name }}</h5>
+                    {% if product.discount > 0 %}
+                    <div class="text-center">
+                        <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                        <!-- <p class="text-center"> -->
+                            {% set price = product.price | float %}
+                            {% set discount = product.discount %}
+                            {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                        <!-- </p> -->
                     </div>
-                    <div class="card-footer">
-                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
-                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
-                    </div>
+                    {% else %}
+                    <div class="text-center">{{ product.price }}đ</div>
+                    {% endif %}
+                    <!-- <p class="text-center">{{ product.price }}đ</p> -->
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
                 </div>
             </div>
-            {% endfor %}
-        {% elif products_by_category %}
-            {% for product in products_by_category %}
-            <div class="col-md-3 mt-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
-                    <div class="card-body">
-                        {% if product.discount > 0 %}
-                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
-                        {% endif %}
-                        <h5 class="text-center">{{ product.name }}</h5>
-                        {% if product.discount > 0 %}
-                            <div class="text-center">
-                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
-                                <!-- <p class="text-center"> -->
-                                    {% set price = product.price | float %}
-                                    {% set discount = product.discount %}
-                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
-                                <!-- </p> -->
-                            </div>
-                        {% else %}
-                            <div class="text-center">{{ product.price }}đ</div>
-                        {% endif %}
-                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
-                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        {% else %}
-            {% for product in products %}
-            <div class="col-md-3 mt-3">
-                <div class="card">
-                    <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
-                    <div class="card-body">
-                        {% if product.discount > 0 %}
-                            <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
-                        {% endif %}
-                        <h5 class="text-center">{{ product.name }}</h5>
-                        {% if product.discount > 0 %}
-                            <div class="text-center">
-                                <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
-                                <!-- <p class="text-center"> -->
-                                    {% set price = product.price | float %}
-                                    {% set discount = product.discount %}
-                                    {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
-                                <!-- </p> -->
-                            </div>
-                        {% else %}
-                            <div class="text-center">{{ product.price }}đ</div>
-                        {% endif %}
-                        <!-- <p class="text-center">{{ product.price }}đ</p> -->
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
-                        <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
-                    </div>
-                </div>
-            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        {% if products_by_brand.has_prev %}
+        <a href="{{ url_for('filter_by_brand', id=brand.id, page=products_by_brand.prev_num) }}" class="btn btn-sm btn-primary mt-3">Prev</a>
+        {% endif %}
+        {% if products_by_brand.total > items_per_page %}
+            {% for page_num in products_by_brand.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if products_by_brand.page == page_num %}
+                    <a href="{{ url_for('filter_by_brand', id=brand.id, page=page_num) }}" class="btn btn-sm btn-primary mt-3">{{ page_num }}</a>
+                    {% else %}
+                    <a href="{{ url_for('filter_by_brand', id=brand.id, page=page_num) }}" class="btn btn-sm btn-outline-primary mt-3">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
             {% endfor %}
         {% endif %}
+        {% if products_by_brand.has_next %}
+        <a href="{{ url_for('filter_by_brand', id=brand.id, page=products_by_brand.next_num) }}" class="btn btn-sm btn-primary mt-3">Next</a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="row">
+    {% elif products_by_category %}
+        {% for product in products_by_category.items %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                <div class="card-body">
+                    {% if product.discount > 0 %}
+                    <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                    {% endif %}
+                    <h5 class="text-center">{{ product.name }}</h5>
+                    {% if product.discount > 0 %}
+                    <div class="text-center">
+                        <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                        <!-- <p class="text-center"> -->
+                            {% set price = product.price | float %}
+                            {% set discount = product.discount %}
+                            {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                        <!-- </p> -->
+                    </div>
+                    {% else %}
+                    <div class="text-center">{{ product.price }}đ</div>
+                    {% endif %}
+                    <!-- <p class="text-center">{{ product.price }}đ</p> -->
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        {% if products_by_category.has_prev %}
+        <a href="{{ url_for('filter_by_category', id=category.id, page=products_by_category.prev_num) }}" class="btn btn-sm btn-primary mt-3">Prev</a>
+        {% endif %}
+        {% if products_by_category.total > items_per_page %}
+            {% for page_num in products_by_category.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if products_by_category.page == page_num %}
+                    <a href="{{ url_for('filter_by_category', id=category.id, page=page_num) }}" class="btn btn-sm btn-primary mt-3">{{ page_num }}</a>
+                    {% else %}
+                    <a href="{{ url_for('filter_by_category', id=category.id, page=page_num) }}" class="btn btn-sm btn-outline-primary mt-3">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if products_by_category.has_next %}
+        <a href="{{ url_for('filter_by_category', id=category.id, page=products_by_category.next_num) }}" class="btn btn-sm btn-primary mt-3">Next</a>
+        {% endif %}
+        </div>
+    </div>
+    <div class="row">
+    {% else %}
+        {% for product in products.items %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top" width="200" height="200">
+                <div class="card-body">
+                    {% if product.discount > 0 %}
+                    <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                    {% endif %}
+                    <h5 class="text-center">{{ product.name }}</h5>
+                    {% if product.discount > 0 %}
+                    <div class="text-center">
+                        <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                        <!-- <p class="text-center"> -->
+                            {% set price = product.price | float %}
+                            {% set discount = product.discount %}
+                            {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                        <!-- </p> -->
+                    </div>
+                    {% else %}
+                    <div class="text-center">{{ product.price }}đ</div>
+                    {% endif %}
+                    <!-- <p class="text-center">{{ product.price }}đ</p> -->
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="float-left btn btn-sm btn-primary">Details</a>
+                    <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        {% if products.has_prev %}
+        <a href="{{ url_for('home', page=products.prev_num) }}" class="btn btn-sm btn-primary mt-3">Prev</a>
+        {% endif %}
+        {% if products.total > items_per_page %}
+            {% for page_num in products.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if products.page == page_num %}
+                    <a href="{{ url_for('home', page=page_num) }}" class="btn btn-sm btn-primary mt-3">{{ page_num }}</a>
+                    {% else %}
+                    <a href="{{ url_for('home', page=page_num) }}" class="btn btn-sm btn-outline-primary mt-3">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if products.has_next %}
+        <a href="{{ url_for('home', page=products.next_num) }}" class="btn btn-sm btn-primary mt-3">Next</a>
+        {% endif %}
+        </div>
+    </div>
+    {% endif %}
     </div>
 </div>
 {% endblock %}
