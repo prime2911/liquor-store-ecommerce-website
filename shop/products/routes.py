@@ -176,7 +176,10 @@ def add_product():
         desc = form.description.data
         brand = request.form.get("brand")
         category = request.form.get("category")
-        image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+        try:
+            image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+        except:
+            image = "product.jpg"
 
         product = Product(
             name=name,
@@ -268,3 +271,11 @@ def delete_product(id):
     flash("Delete unsuccessful!", category="danger")
 
     return redirect(url_for("admin"))
+
+@app.route("/product/<int:id>")
+def product_details(id):
+    product = Product.query.get_or_404(id)
+    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    return render_template("products/product-details.html", title="Product Details", product=product, brands=brands, categories=categories)
