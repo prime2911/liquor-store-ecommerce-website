@@ -15,11 +15,11 @@ A liquor store eCommerce website made with Python and Flask
 
 
 * **Step 2 (Optional):**
- - Create a [virtual environment](https://docs.python.org/3/library/venv.html) in the local repo.
- - Activate your virtual environment.
+    - Create a [virtual environment](https://docs.python.org/3/library/venv.html) in the local repo.
+    - Activate your virtual environment.
 
 
 * **Step 3:**
- - Run `pip install -r requirements.txt` to install the dependencies.
- - After the installation process is finished, run `main.py`.
- - The website's URL is http://localhost:5000.
+    - Run `pip install -r requirements.txt` to install the dependencies.
+    - After the installation process is finished, run `main.py`.
+    - The website's URL is http://localhost:5000.
