@@ -5,7 +5,7 @@ A liquor store eCommerce website made with Python and Flask
 ## Requirements
 * Python 3.8 or higher.
 * A stable Internet connection.
-* A Connected MySQL control panel (e.g. phpMyAdmin)
+* Connection to a MySQL Server (e.g. using phpMyAdmin with XAMPP)
 
 
 ## Installation
@@ -22,4 +22,4 @@ A liquor store eCommerce website made with Python and Flask
 * **Step 3:**
  - Run `pip install -r requirements.txt` to install the dependencies.
  - After the installation process is finished, run `main.py`.
- - The website's URL is (http://localhost:5000).
+ - The website's URL is http://localhost:5000.
