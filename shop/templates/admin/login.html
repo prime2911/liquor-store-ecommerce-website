@@ -9,12 +9,10 @@
       {% include "_messages.html" %}
       <form method="POST" enctype="multipart/form-data">
         <dl>
-          {{ render_field(form.email, class="form-control") }} {{
-          render_field(form.password, class="form-control") }}
+          {{ render_field(form.email, class="form-control") }}
+          {{ render_field(form.password, class="form-control") }}
         </dl>
-        <p>
-          <input type="submit" value="Login" class="btn btn-primary mt-2" />
-        </p>
+        <p><input type="submit" value="Login" class="btn btn-primary mt-2" /></p>
       </form>
     </div>
     <div class="col-md-4"></div>
