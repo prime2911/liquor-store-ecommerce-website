@@ -1,5 +1,6 @@
-from shop import db
 from datetime import datetime
+
+from shop import db
 
 
 class Product(db.Model):

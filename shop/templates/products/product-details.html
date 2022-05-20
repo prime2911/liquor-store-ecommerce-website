@@ -22,7 +22,7 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for brand in brands %}
-                    <a class="dropdown-item" href="{{ url_for('filter_by_brand', id=brand.id) }}">{{brand.name}}</a>
+                    <a class="dropdown-item" href="{{ url_for('filter_by_brand', id=brand.id) }}">{{ brand.name }}</a>
                     {% endfor %}
                 </div>
             </li>
@@ -32,12 +32,12 @@
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     {% for category in categories %}
-                    <a class="dropdown-item" href="{{ url_for('filter_by_category', id=category.id) }}">{{category.name}}</a>
+                    <a class="dropdown-item" href="{{ url_for('filter_by_category', id=category.id) }}">{{ category.name }}</a>
                     {% endfor %}
                 </div>
             </li>
             <li class="nav-item">
-                <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                <a class="nav-link disabled" href="#" tabindex="-1">Cart: {{ session["shopping_cart"] | length }}</a>
             </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -85,7 +85,14 @@
                 <b>Description:</b>
                 <p> {{ product.desc }} </p>
             </div>
-            <a href="#" class="btn btn-sm btn-success">Add to Cart</a>
+            <hr>
+            <form action="{{ url_for('add_to_cart') }}" method="post">
+                <input type="hidden" name="product_id" value = "{{ product.id }}">
+                <button type="submit" class="btn btn-sm btn-success">Add to Cart</button>
+                <label for="">Quantity:&nbsp;</label>
+                <input type="number" name="quantity" id="" value="1" min="1" max="{{ product.stock }}">
+            </form>
+            <!-- <a href="#" class="btn btn-sm btn-success">Add to Cart</a> -->
         </div>
     </div>
 </div>
