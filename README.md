@@ -15,7 +15,7 @@ A liquor store eCommerce website made with Python and Flask
 
 
 * **Step 2 (Optional):**
-    - Create a [virtual environment](https://docs.python.org/3/library/venv.html) in the local repo.
+    - Create a [virtual environment folder](https://docs.python.org/3/library/venv.html) in the local repo.
     - Activate your virtual environment.
 
 
