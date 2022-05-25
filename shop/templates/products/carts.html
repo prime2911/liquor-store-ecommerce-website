@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>No.</th>
+                <th>Product</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Discount</th>
+                <th>Subtotal</th>
+                <th>Actions</th>
+            </thead>
+            <tbody>
+                {% for key, product in session["shopping_cart"].items() %}
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}đ</td>
+                    {% if product.discount > 0 %}
+                    <td>{{ product.discount }}%</td>
+                    {% else %}
+                    <td></td>
+                    {% endif %}
+                    {% set price = product.price | float %}              
+                    {% set discount = product.discount %}
+                    {% set quantity = product.quantity | int %}
+                    <td>{{"%.2f" | format(price * quantity * (1 - (discount / 100)) | float) }}đ</td>
+                    <td>
+                      <a href="#" class="btn btn-sm btn-outline-info">Update</a>&emsp;
+                      <a href="#" class="btn btn-sm btn-outline-danger">Remove</a>&emsp;
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{{ session["shopping_cart"] }}

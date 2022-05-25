@@ -22,11 +22,11 @@ def add_to_cart():
         if product_id and quantity and request.method == "POST":
             cart_item = {product_id:{
                 "name": product.name,
-                "origins": product.origins,
+                # "origins": product.origins,
                 "price": product.price,
                 "discount": product.discount,
-                "quantity": quantity,
-                "image": product.image
+                "quantity": quantity
+                # "image": product.image
             }}
 
             if "shopping_cart" in session:
@@ -46,3 +46,10 @@ def add_to_cart():
         print(e)
     finally:
         return redirect(request.referrer)
+
+@app.route("/carts")
+def get_cart():
+    if "shopping_cart" not in session:
+        return redirect(request.referrer)
+    print(session["shopping_cart"])
+    return render_template("products/carts.html", title="Your Shopping Cart")
