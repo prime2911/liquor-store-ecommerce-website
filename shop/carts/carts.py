@@ -8,8 +8,10 @@ from shop.products.models  import Product
 def merge_dicts(dict1, dict2):
     if isinstance(dict1, list) and isinstance(dict2, list):
         return dict1 + dict2
+
     elif isinstance(dict1, dict) and isinstance(dict2, dict):
         return dict(list(dict1.items()) + list(dict2.items()))
+
     return False
 
 
@@ -32,7 +34,7 @@ def add_to_cart():
             }}
 
             if "shopping_cart" in session:
-                print(session["shopping_cart"])
+                # print(session["shopping_cart"])
 
                 if product_id in session["shopping_cart"]:
                     # print("This item is already in your shopping cart!")
@@ -52,8 +54,8 @@ def add_to_cart():
 
 @app.route("/carts")
 def get_cart():
-    if "shopping_cart" not in session:
-        return redirect(request.referrer)
+    if "shopping_cart" not in session or len(session["shopping_cart"]) <= 0:
+        return redirect(url_for("home"))
 
     subtotal = 0
     grand_total = 0
@@ -69,14 +71,14 @@ def get_cart():
 
 @app.route("/update-cart/<int:id>", methods=["POST"])
 def update_cart(id):
-    if "shopping_cart" not in session and len(session["shopping_cart"]) <= 0:
+    if "shopping_cart" not in session or len(session["shopping_cart"]) <= 0:
         return redirect(url_for("home"))
     
     if request.method == "POST":
         quantity = request.form.get("quantity")
         
         try:
-            session.modify = True
+            session.modified = True
             for key, product in session["shopping_cart"].items():
                 if int(key) == id:
                     product["quantity"] = quantity
@@ -88,4 +90,20 @@ def update_cart(id):
 
             return redirect(url_for("get_cart"))
 
-    return
+@app.route("/remove-cart/<int:id>")
+def remove_cart(id):
+    if "shopping_cart" not in session or len(session["shopping_cart"]) <= 0:
+        return redirect(url_for("home"))
+    
+    try:
+        session.modified = True
+
+        for key, _ in session["shopping_cart"].items():
+            if int(key) == id:
+                session["shopping_cart"].pop(key, None)
+
+                return redirect(url_for("get_cart"))
+    except Exception as e:
+        print(e)
+
+        return redirect(url_for("get_cart"))

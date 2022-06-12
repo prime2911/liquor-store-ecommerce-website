@@ -38,7 +38,7 @@
                     <td>
                       <button type="submit" class="btn btn-sm btn-outline-info">Update</button>&emsp;
                     </form>
-                      <a href="#" class="btn btn-sm btn-outline-danger">Remove</a>&emsp;
+                      <a href="{{ url_for('remove_cart', id=key) }}" class="btn btn-sm btn-outline-danger">Remove</a>&emsp;
                     </td>
                 </tr>
                 {% endfor %}
