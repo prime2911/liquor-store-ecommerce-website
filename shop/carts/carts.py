@@ -1,3 +1,4 @@
+from math import prod
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 
 from shop import db, app
@@ -51,5 +52,15 @@ def add_to_cart():
 def get_cart():
     if "shopping_cart" not in session:
         return redirect(request.referrer)
+
+    subtotal = 0
+    grand_total = 0
     print(session["shopping_cart"])
-    return render_template("products/carts.html", title="Your Shopping Cart")
+    for product in session["shopping_cart"].values():
+        discount = (product["discount"] / 100) * float(product["price"])
+        subtotal += float(product["price"]) * int(product["quantity"])
+        subtotal -= discount
+        tax = "%.2f" % (0.1 * float(subtotal))
+        grand_total = float("%.2f" % (1.1 * subtotal))
+
+    return render_template("products/carts.html", title="Your Shopping Cart", tax=tax, grand_total=grand_total)

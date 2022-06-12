@@ -35,6 +35,12 @@
                     </td>
                 </tr>
                 {% endfor %}
+                <tr>
+                    <td></td>
+                    <td><a  href="{{ url_for('home') }}" class="btn btn-sm btn-success">Continue Shopping</a></td>
+                    <td colspan="3"><h4>Tax:</h4> {{ tax }}đ</td>
+                    <td colspan="4"><h4>Grand Total:</h4> {{ grand_total }}đ</td>
+                </tr>
             </tbody>
         </table>
     </div>
