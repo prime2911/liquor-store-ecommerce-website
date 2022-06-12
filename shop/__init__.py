@@ -2,6 +2,7 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_uploads import IMAGES, UploadSet, configure_uploads, patch_request_class
+from flask_msearch import Search
 import os
 
 
@@ -23,6 +24,8 @@ patch_request_class(app)
 # db.init_app(app)
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+search = Search()
+search.init_app(app)
 
 from shop.admin import routes
 from shop.products import routes
