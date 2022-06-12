@@ -108,3 +108,17 @@ def remove_cart(id):
         print(e)
 
         return redirect(url_for("get_cart"))
+
+@app.route("/clear-cart")
+def clear_cart():
+    if "shopping_cart" not in session or len(session["shopping_cart"]) <= 0:
+        return redirect(url_for("home"))
+    
+    try:
+        session.pop("shopping_cart", None)
+
+        return redirect(url_for("home"))
+    except Exception as e:
+        print(e)
+
+        return redirect(url_for("get_cart"))
