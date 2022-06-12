@@ -26,15 +26,17 @@ def add_to_cart():
                 # "origins": product.origins,
                 "price": product.price,
                 "discount": product.discount,
-                "quantity": quantity
-                # "image": product.image
+                "quantity": quantity,
+                "stock": product.stock,
+                "image": product.image
             }}
 
             if "shopping_cart" in session:
                 print(session["shopping_cart"])
 
                 if product_id in session["shopping_cart"]:
-                    print("This item is already in your shopping cart!")
+                    # print("This item is already in your shopping cart!")
+                    flash("This item is already in your shopping cart!", category="danger")
                 else:
                     session["shopping_cart"] = merge_dicts(session["shopping_cart"], cart_item)
 
@@ -55,7 +57,7 @@ def get_cart():
 
     subtotal = 0
     grand_total = 0
-    print(session["shopping_cart"])
+    # print(session["shopping_cart"])
     for product in session["shopping_cart"].values():
         discount = (product["discount"] / 100) * float(product["price"])
         subtotal += float(product["price"]) * int(product["quantity"])
@@ -64,3 +66,26 @@ def get_cart():
         grand_total = float("%.2f" % (1.1 * subtotal))
 
     return render_template("products/carts.html", title="Your Shopping Cart", tax=tax, grand_total=grand_total)
+
+@app.route("/update-cart/<int:id>", methods=["POST"])
+def update_cart(id):
+    if "shopping_cart" not in session and len(session["shopping_cart"]) <= 0:
+        return redirect(url_for("home"))
+    
+    if request.method == "POST":
+        quantity = request.form.get("quantity")
+        
+        try:
+            session.modify = True
+            for key, product in session["shopping_cart"].items():
+                if int(key) == id:
+                    product["quantity"] = quantity
+                    flash("Your cart is updated!", category="success")
+
+                    return redirect(url_for("get_cart"))
+        except Exception as e:
+            print(e)
+
+            return redirect(url_for("get_cart"))
+
+    return
