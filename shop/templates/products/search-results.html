@@ -1,0 +1,69 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include "navbar.html" %}
+
+<div class="container">
+    <div class="row">
+        {% for product in products.items %}
+        <div class="col-md-3 mt-3">
+            <div class="card">
+                <img src="{{ url_for('static', filename='images/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200">
+                <div class="card-body">
+                    {% if product.discount > 0 %}
+                    <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
+                    {% endif %}
+                    <h5 class="text-center">{{ product.name }}</h5>
+                    {% if product.discount > 0 %}
+                    <div class="text-center">
+                        <span class="text-danger" style="text-decoration: line-through;">{{ product.price }}đ</span>&emsp;
+                        <!-- <p class="text-center"> -->
+                            {% set price = product.price | float %}
+                            {% set discount = product.discount %}
+                            {{"%.2f" | format(price * (1 - (discount / 100)) | float) }}đ
+                        <!-- </p> -->
+                    </div>
+                    {% else %}
+                    <div class="text-center">{{ product.price }}đ</div>
+                    {% endif %}
+                    <!-- <p class="text-center">{{ product.price }}đ</p> -->
+                </div>
+                <div class="card-footer">
+                    <a href="{{ url_for('product_details', id=product.id) }}" class="float-left btn btn-sm btn-primary">Details</a>
+                    <form action="{{ url_for('add_to_cart') }}" method="post">
+                        <input type="hidden" name="product_id" value = "{{ product.id }}">
+                        <button type="submit" class="float-right btn btn-sm btn-success">Add to Cart</button>
+                        <input type="hidden" name="quantity" id="" value="1" min="1" max="{{ product.stock }}">
+                    </form>
+                    <!-- <a href="#" class="float-right btn btn-sm btn-success">Add to Cart</a> -->
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    <div class="row">
+        <div class="col text-center">
+        {% if products.has_prev %}
+        <a href="{{ url_for('home', page=products.prev_num) }}" class="btn btn-sm btn-primary mt-3">Prev</a>
+        {% endif %}
+        {% if products.total > items_per_page %}
+            {% for page_num in products.iter_pages(left_edge=1, right_edge=2, left_current=1, right_current=2) %}
+                {% if page_num %}
+                    {% if products.page == page_num %}
+                    <a href="{{ url_for('home', page=page_num) }}" class="btn btn-sm btn-primary mt-3">{{ page_num }}</a>
+                    {% else %}
+                    <a href="{{ url_for('home', page=page_num) }}" class="btn btn-sm btn-outline-primary mt-3">{{ page_num }}</a>
+                    {% endif %}
+                {% else %}
+                ...
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+        {% if products.has_next %}
+        <a href="{{ url_for('home', page=products.next_num) }}" class="btn btn-sm btn-primary mt-3">Next</a>
+        {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

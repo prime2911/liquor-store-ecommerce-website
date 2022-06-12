@@ -1,12 +1,12 @@
 from flask import render_template, request, redirect, session, url_for, flash, current_app
 import secrets, os
 
-from shop import db, app, photos
+from shop import db, app, photos, search
 from .models import Brand, Category, Product
 from .forms import ProductForm
 
 
-items_per_page = 5
+items_per_page = 8
 
 @app.route("/")
 def home():
@@ -17,7 +17,15 @@ def home():
     # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
     return render_template("products/index.html", title="Home Page", products=products, brands=get_brands(), categories=get_categories(), items_per_page=items_per_page)
-    
+
+@app.route("/search-results")
+def search_products():
+    search_keyword = request.args.get("search_product")
+    page = request.args.get("page", default=1, type=int)
+    products = Product.query.msearch(search_keyword, fields=["name", "desc"]).filter(Product.stock > 0).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
+
+    return render_template("products/search-results.html", title=f"Search Results for '{search_keyword}'", products=products, brands=get_brands(), categories=get_categories(), items_per_page=items_per_page)
+
 @app.route("/brands/<int:id>")
 def filter_by_brand(id):
     page = request.args.get("page", default=1, type=int)
