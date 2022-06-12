@@ -13,10 +13,10 @@ def home():
     page = request.args.get("page", default=1, type=int)
     # per_page = 3
     products = Product.query.filter(Product.stock > 0).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
-    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
-    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", title="Home Page", products=products, brands=brands, categories=categories, items_per_page=items_per_page)
+    return render_template("products/index.html", title="Home Page", products=products, brands=get_brands(), categories=get_categories(), items_per_page=items_per_page)
     
 @app.route("/brands/<int:id>")
 def filter_by_brand(id):
@@ -24,10 +24,10 @@ def filter_by_brand(id):
     # per_page = 3
     brand = Brand.query.filter_by(id=id).first_or_404()
     products = Product.query.filter(Product.stock > 0).filter_by(brand = brand).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
-    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
-    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", title="Home Page", products_by_brand=products, brands=brands, categories=categories, brand=brand, items_per_page=items_per_page)
+    return render_template("products/index.html", title="Home Page", products_by_brand=products, brands=get_brands(), categories=get_categories(), brand=brand, items_per_page=items_per_page)
 
 @app.route("/categories/<int:id>")
 def filter_by_category(id):
@@ -35,10 +35,20 @@ def filter_by_category(id):
     # per_page = 3
     category = Category.query.filter_by(id=id).first_or_404()
     products = Product.query.filter(Product.stock > 0).filter_by(category = category).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
+    # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+
+    return render_template("products/index.html", title="Home Page", products_by_category=products, brands=get_brands(), categories=get_categories(), category=category, items_per_page=items_per_page)
+
+def get_brands():
     brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+
+    return brands
+
+def get_categories():
     categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/index.html", title="Home Page", products_by_category=products, brands=brands, categories=categories, category=category, items_per_page=items_per_page)
+    return categories
 
 @app.route("/add-brand", methods=["GET", "POST"])
 def add_brand():
@@ -275,7 +285,7 @@ def delete_product(id):
 @app.route("/product/<int:id>")
 def product_details(id):
     product = Product.query.get_or_404(id)
-    brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
-    categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
+    # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
+    # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
-    return render_template("products/product-details.html", title="Product Details", product=product, brands=brands, categories=categories)
+    return render_template("products/product-details.html", title="Product Details", product=product, brands=get_brands(), categories=get_categories())

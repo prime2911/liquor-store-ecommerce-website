@@ -3,6 +3,7 @@ from flask import redirect, render_template, url_for, flash, request, session, c
 
 from shop import db, app
 from shop.products.models  import Product
+from shop.products.routes  import get_brands, get_categories
 
 
 def merge_dicts(dict1, dict2):
@@ -67,7 +68,7 @@ def get_cart():
         tax = "%.2f" % (0.1 * float(subtotal))
         grand_total = float("%.2f" % (1.1 * subtotal))
 
-    return render_template("products/carts.html", title="Your Shopping Cart", tax=tax, grand_total=grand_total)
+    return render_template("products/carts.html", title="Your Shopping Cart", tax=tax, grand_total=grand_total, brands=get_brands(), categories=get_categories())
 
 @app.route("/update-cart/<int:id>", methods=["POST"])
 def update_cart(id):
