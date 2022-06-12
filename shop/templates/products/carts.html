@@ -30,7 +30,7 @@
                         {% if product.discount > 0 %}
                         <td>{{ product.discount }}%</td>
                         {% else %}
-                        <td></td>
+                        <td>0đ</td>
                         {% endif %}
                         {% set price = product.price | float %}              
                         {% set discount = product.discount %}
