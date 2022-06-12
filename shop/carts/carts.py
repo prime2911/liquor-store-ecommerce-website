@@ -20,7 +20,7 @@ def merge_dicts(dict1, dict2):
 def add_to_cart():
     try:
         product_id = request.form.get("product_id")
-        quantity = request.form.get("quantity")
+        quantity = int(request.form.get("quantity"))
         product = Product.query.filter_by(id=product_id).first()
 
         if product_id and quantity and request.method == "POST":
@@ -35,11 +35,20 @@ def add_to_cart():
             }}
 
             if "shopping_cart" in session:
-                # print(session["shopping_cart"])
+                print(session["shopping_cart"])
 
                 if product_id in session["shopping_cart"]:
                     # print("This item is already in your shopping cart!")
-                    flash("This item is already in your shopping cart!", category="danger")
+                    # flash("This item is already in your shopping cart!", category="danger")
+                    for key, product in session["shopping_cart"].items():
+                        if int(key) == int(product_id):
+                            session.modified = True
+                            # product["quantity"] += 1
+                            if product["quantity"] + 1 <= product["stock"]:
+                                product["quantity"] += 1
+                            else:
+                                flash("Buying amount exceeds stock!", category="danger")
+
                 else:
                     session["shopping_cart"] = merge_dicts(session["shopping_cart"], cart_item)
 
@@ -76,7 +85,7 @@ def update_cart(id):
         return redirect(url_for("home"))
     
     if request.method == "POST":
-        quantity = request.form.get("quantity")
+        quantity = int(request.form.get("quantity"))
         
         try:
             session.modified = True
