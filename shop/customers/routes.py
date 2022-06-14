@@ -10,7 +10,7 @@ from .models import Customer
 def customer_register():
     form = CustomerRegistrationForm(request.form)
 
-    if request.method == "POST":
+    if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         try:
             image = photos.save(request.files.get("profile_pic"), folder="customers", name=f"{secrets.token_hex(10)}.")
@@ -29,7 +29,7 @@ def customer_register():
         )
 
         db.session.add(customer)
-        # db.session.commit()
+        db.session.commit()
         flash(f"Welcome, {form.name.data}!", category="success")
 
         return redirect(url_for("home"))
