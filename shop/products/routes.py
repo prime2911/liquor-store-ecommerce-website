@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, session, url_for, flash, current_app
 import secrets, os
 
-from shop import db, app, photos, search
+from shop import db, app, photos
 from .models import Brand, Category, Product
 from .forms import ProductForm
 

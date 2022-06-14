@@ -1,9 +1,9 @@
 from math import prod
-from flask import redirect, render_template, url_for, flash, request, session, current_app
+from flask import redirect, render_template, url_for, flash, request, session
 
-from shop import db, app
-from shop.products.models  import Product
-from shop.products.routes  import get_brands, get_categories
+from shop import app
+from shop.products.models import Product
+from shop.products.routes import get_brands, get_categories
 
 
 def merge_dicts(dict1, dict2):

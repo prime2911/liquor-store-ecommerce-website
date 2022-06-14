@@ -1,7 +1,7 @@
-from wtforms import Form, TextAreaField, StringField, PasswordField, SubmitField, validators, ValidationError
+from wtforms import StringField, PasswordField, SubmitField, validators, ValidationError
 from wtforms.fields.datetime import DateField
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileAllowed, FileField, FileRequired
+from flask_wtf.file import FileAllowed, FileField
 
 from .models import Customer
 
