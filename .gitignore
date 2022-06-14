@@ -2,3 +2,6 @@ __pycache__
 images
 env
 .vscode
+
+!profile.jpg
+!product.jpg
