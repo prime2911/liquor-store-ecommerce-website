@@ -24,11 +24,20 @@ class CustomerRegistrationForm(FlaskForm):
     submit = SubmitField("Register")
 
     def validate_username(self, username):
-        if Customer.query.filter_by(username=username.data):
+        if Customer.query.filter_by(username=username.data).first():
             raise ValidationError("This username is already in use!")
+    
     def validate_email(self, email):
-        if Customer.query.filter_by(email=email.data):
+        if Customer.query.filter_by(email=email.data).first():
             raise ValidationError("This email is already in use!")
+
+    def validate_civ_id(self, civ_id):
+        if Customer.query.filter_by(civ_id=civ_id.data).first():
+            raise ValidationError("This ID Number is already in use!")
+
+    def validate_phone_number(self, phone_number):
+        if Customer.query.filter_by(phone_number=phone_number.data).first():
+            raise ValidationError("This phone number is already in use!")
 
 class CustomerLoginForm(FlaskForm):
     email = StringField(

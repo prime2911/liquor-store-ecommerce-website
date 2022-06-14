@@ -1,9 +1,14 @@
 from datetime import datetime
+from flask_login import UserMixin
 
-from shop import db
+from shop import db, login_manager
 
 
-class Customer(db.Model):
+@login_manager.user_loader
+def user_loader(user_id):
+    return Customer.query.get(user_id)
+
+class Customer(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(200), unique=False, nullable=False)
     username = db.Column(db.String(200), unique=True, nullable=False)
