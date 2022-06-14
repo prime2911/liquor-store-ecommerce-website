@@ -45,7 +45,7 @@
                         <td></td>
                         <td><a href="" class="btn btn-success mt-2">Check Out</a></td>
                         <td><form action="{{ url_for('export_invoice', invoice_number=invoice.invoice_number) }}" target="_blank" method="POST"><button type="submit" class="btn btn-primary mt-2">Export PDF</button></form></td>                     
-                        <td><a href="" class="btn btn-danger float-right mt-2 mr-5">Cancel Order</a></td>
+                        <td><a href="" class="btn btn-danger mt-2">Cancel Order</a></td>
                         <td colspan="2"><h4>Tax: </h4>{{ tax }}đ</td>
                         <td><h4>Grand Total: </h4>{{ grand_total }}đ</td>
                     </tr>
