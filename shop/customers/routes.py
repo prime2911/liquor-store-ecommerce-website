@@ -145,7 +145,7 @@ def export_invoice(invoice_number):
             response = make_response(pdf)
 
             response.headers["content-Type"] = "application/pdf"
-            response.headers["content-Disposition"] = f"inline: filename={invoice_number}.pdf"
+            response.headers["content-Disposition"] = f"inline; filename={invoice_number}.pdf"
 
             return response
         
