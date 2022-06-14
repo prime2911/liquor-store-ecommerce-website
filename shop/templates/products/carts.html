@@ -24,7 +24,7 @@
                         <td>{{ loop.index }}</td>
                         <td><img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="{{ product.name }}" width="100" height="100"></td>
                         <td>{{ product.name }}</td>
-                        <form action="{{ url_for('update_cart', id= key ) }}" method="POST">
+                        <form action="{{ url_for('update_cart', id=key ) }}" method="POST">
                         <td><input type="number" name="quantity" min="1" max="{{ product.stock }}" value="{{ product.quantity }}"></td>
                         <td>{{ product.price }}đ</td>
                         {% if product.discount > 0 %}
@@ -45,7 +45,11 @@
                     {% endfor %}
                     <tr>
                         <td></td>
-                        <td><a href="{{ url_for('home') }}" class="btn btn-success mt-2">Check Out</a></td>
+                        {% if current_user.is_authenticated %}
+                        <td><a href="{{ url_for('place_order') }}" class="btn btn-success mt-2">Check Out</a></td>
+                        {% else %}
+                        <td><a href="{{ url_for('customer_login') }}" class="btn btn-success mt-2">Check Out</a></td>
+                        {% endif %}
                         <td colspan="2"></td>
                         <td><h4>Tax:</h4> {{ tax }}đ</td>
                         <td><h4>Grand Total:</h4> {{ grand_total }}đ</td>
@@ -57,5 +61,3 @@
     </div>
 </div>
 {% endblock %}
-
-{{ session["shopping_cart"] }}
