@@ -7,11 +7,20 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
-            <b>Invoice Number: </b>{{ invoice.invoice_number }}
-            <br>
-            <b>Status: </b>{{ invoice.status }}
-            <br>
-            <br>
+            <div class="float-right mb-3">
+                <b>Invoice Number: </b>{{ invoice.invoice_number }}
+                <br>
+                <b>Status: </b>{{ invoice.status }}
+                <br>
+                <b>Date Created: </b>{{ invoice.date_created }}
+            </div>
+            <div class="float-left mb-3">
+                <b>Customer Name: </b>{{ customer.name }}
+                <br>
+                <b>Email: </b>{{ customer.email }}
+                <br>
+                <b>Phone number: </b>{{ customer.phone_number }}
+            </div>
             <table class="table table-sm">
                 <thead>
                     <th>No.</th>
