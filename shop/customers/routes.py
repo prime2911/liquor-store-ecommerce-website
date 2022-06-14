@@ -6,6 +6,7 @@ import pdfkit
 from shop import db, app, photos, bcrypt
 from .forms import CustomerRegistrationForm, CustomerLoginForm
 from .models import Customer, Invoice
+from shop.products.routes import get_brands, get_categories
 
 
 @app.route("/customers/register", methods=["GET", "POST"])
@@ -99,7 +100,7 @@ def get_invoices():
     else:
         return redirect(url_for("customer_login"))
 
-    return render_template("customers/invoices.html", title="My Invoices", invoices=invoices)
+    return render_template("customers/invoices.html", title="My Invoices", invoices=invoices, brands=get_brands(), categories=get_categories())
 
 @app.route("/invoices/<invoice_number>", methods=["GET"])
 @login_required
@@ -120,7 +121,7 @@ def get_invoice_details(invoice_number):
     else:
         return redirect(url_for("customer_login"))
 
-    return render_template("customers/invoice_details.html", title="Invoice Details", tax=tax, grand_total=grand_total, customer=customer, invoice=invoice)
+    return render_template("customers/invoice_details.html", title="Invoice Details", tax=tax, grand_total=grand_total, customer=customer, invoice=invoice, brands=get_brands(), categories=get_categories())
 
 @app.route("/export-invoice/<invoice_number>", methods=["POST"])
 @login_required
