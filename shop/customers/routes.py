@@ -13,7 +13,7 @@ def customer_register():
     if request.method == "POST":
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         try:
-            image = photos.save(request.files.get("image"), name=f"customers/{secrets.token_hex(10)}.")
+            image = photos.save(request.files.get("profile_pic"), name=f"customers/{secrets.token_hex(10)}.")
         except:
             image = "profile.jpg"
 
@@ -29,6 +29,7 @@ def customer_register():
         )
 
         db.session.add(customer)
+        # db.session.commit()
         flash(f"Welcome, {form.name.data}!", category="success")
 
         return redirect(url_for("home"))
