@@ -46,12 +46,12 @@
                     <tr>
                         <td></td>
                         {% if current_user.is_authenticated %}
-                        <td><a href="{{ url_for('place_order') }}" class="btn btn-success mt-2">Check Out</a></td>
+                        <td><a href="{{ url_for('place_order') }}" class="btn btn-success mt-2">Place Order</a></td>
                         {% else %}
-                        <td><a href="{{ url_for('customer_login') }}" class="btn btn-success mt-2">Check Out</a></td>
+                        <td><a href="{{ url_for('customer_login') }}" class="btn btn-success mt-2">Place Order</a></td>
                         {% endif %}
                         <td colspan="2"></td>
-                        <td><h4>Tax:</h4> {{ tax }}đ</td>
+                        <td colspan="2"><h4>Tax:</h4> {{ tax }}đ</td>
                         <td><h4>Grand Total:</h4> {{ grand_total }}đ</td>
                         <td><a href="{{ url_for('clear_cart') }}" class="btn btn-danger float-right mt-2 mr-5">Clear Cart</a></td>
                     </tr>
