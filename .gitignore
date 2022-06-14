@@ -3,5 +3,6 @@ images
 env
 .vscode
 
-!*/profile.jpg
-!*/product.jpg
+!*/images/customers/profile.jpg
+!*/images/products/product.jpg
+

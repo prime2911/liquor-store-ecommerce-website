@@ -13,7 +13,7 @@ def customer_register():
     if request.method == "POST":
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         try:
-            image = photos.save(request.files.get("profile_pic"), name=f"customers/{secrets.token_hex(10)}.")
+            image = photos.save(request.files.get("profile_pic"), folder="customers", name=f"{secrets.token_hex(10)}.")
         except:
             image = "profile.jpg"
 

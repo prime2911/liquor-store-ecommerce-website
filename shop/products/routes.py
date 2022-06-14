@@ -195,7 +195,7 @@ def add_product():
         brand = request.form.get("brand")
         category = request.form.get("category")
         try:
-            image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+            image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
         except:
             image = "product.jpg"
 
@@ -245,10 +245,10 @@ def update_product(id):
 
         if request.files.get("image"):
             try:
-                os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image))
-                product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+                os.unlink(os.path.join(current_app.root_path, "static/images/products" + product.image))
+                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
             except:
-                product.image = photos.save(request.files.get("image"), name=secrets.token_hex(10) + ".")
+                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
 
         db.session.commit()
         flash("Product updated!", category="success")
@@ -276,7 +276,7 @@ def delete_product(id):
 
     if request.method == "POST":
         try:
-            os.unlink(os.path.join(current_app.root_path, "static/images/" + product.image))
+            os.unlink(os.path.join(current_app.root_path, "static/images/products" + product.image))
         except Exception as e:
             print(e)
 
