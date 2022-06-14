@@ -10,7 +10,7 @@
         {% for product in products_by_brand.items %}
         <div class="col-md-3 mt-3">
             <div class="card">
-                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200">
+                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200" style="display:block; margin-left:auto; margin-right:auto; width:auto; height:200px;">
                 <div class="card-body">
                     {% if product.discount > 0 %}
                     <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
@@ -71,7 +71,7 @@
         {% for product in products_by_category.items %}
         <div class="col-md-3 mt-3">
             <div class="card">
-                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200">
+                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200" style="display:block; margin-left:auto; margin-right:auto; width:auto; height:200px;">
                 <div class="card-body">
                     {% if product.discount > 0 %}
                     <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>
@@ -132,7 +132,7 @@
         {% for product in products.items %}
         <div class="col-md-3 mt-3">
             <div class="card">
-                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200">
+                <img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="" class="card-img-top p-2" width="200" height="200" style="display:block; margin-left:auto; margin-right:auto; width:auto; height:200px;">
                 <div class="card-body">
                     {% if product.discount > 0 %}
                     <h6 style="background-color: green; color: white; position: absolute; top: 0%; left: 0%;">&nbsp;{{ product.discount }}% Off!&nbsp;</h6>

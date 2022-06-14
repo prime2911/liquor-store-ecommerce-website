@@ -195,7 +195,7 @@ def add_product():
         brand = request.form.get("brand")
         category = request.form.get("category")
         try:
-            image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
+            image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")[9:]
         except:
             image = "product.jpg"
 
