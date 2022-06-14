@@ -7,6 +7,11 @@
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-12">
+            <text style="font-weight:bold">Invoice Number: </text>{{ invoice.invoice_number }}
+            <br>
+            <text style="font-weight:bold">Status: </text>{{ invoice.status }}
+            <br>
+            <br>
             <table class="table table-sm">
                 <thead>
                     <th>No.</th>
@@ -16,16 +21,15 @@
                     <th>Price</th>
                     <th>Discount</th>
                     <th>Subtotal</th>
-                    <th>Actions</th>
                 </thead>
                 <tbody>
-                    {% for key, product in session["shopping_cart"].items() %}
+                    {% for key, product in invoice.invoice_details.items() %}
                     <tr>
                         <td>{{ loop.index }}</td>
                         <td><img src="{{ url_for('static', filename='images/products/' + product.image) }}" alt="{{ product.name }}" width="100" height="100"></td>
                         <td>{{ product.name }}</td>
-                        <form action="{{ url_for('update_cart', id=key ) }}" method="POST">
-                        <td><input type="number" name="quantity" min="1" max="{{ product.stock }}" value="{{ product.quantity }}"></td>
+                        <form action="{{ url_for('update_cart', id= key ) }}" method="POST">
+                        <td>{{ product.quantity }}</td>
                         <td>{{ product.price }}đ</td>
                         {% if product.discount > 0 %}
                         <td>{{ product.discount }}%</td>
@@ -36,24 +40,16 @@
                         {% set discount = product.discount %}
                         {% set quantity = product.quantity | int %}
                         <td>{{"%.2f" | format(price * quantity * (1 - (discount / 100)) | float) }}đ</td>
-                        <td>
-                        <button type="submit" class="btn btn-sm btn-outline-info">Update</button>&emsp;
-                        </form>
-                        <a href="{{ url_for('remove_cart', id=key) }}" class="btn btn-sm btn-outline-danger">Remove</a>&emsp;
-                        </td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td></td>
-                        {% if current_user.is_authenticated %}
-                        <td><a href="{{ url_for('place_order') }}" class="btn btn-success mt-2">Place Order</a></td>
-                        {% else %}
-                        <td><a href="{{ url_for('customer_login') }}" class="btn btn-success mt-2">Place Order</a></td>
-                        {% endif %}
+                        <td><a href="" class="btn btn-success mt-2">Check Out</a></td>
+                        <td><a href="" class="btn btn-success mt-2">Export PDF</a></td>
                         <td colspan="2"></td>
                         <td colspan="2"><h4>Tax: </h4>{{ tax }}đ</td>
                         <td><h4>Grand Total: </h4>{{ grand_total }}đ</td>
-                        <td><a href="{{ url_for('clear_cart') }}" class="btn btn-danger float-right mt-2 mr-5">Clear Cart</a></td>
+                        <td><a href="" class="btn btn-danger float-right mt-2 mr-5">Cancel Order</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -61,3 +57,5 @@
     </div>
 </div>
 {% endblock %}
+
+{{ session["shopping_cart"] }}

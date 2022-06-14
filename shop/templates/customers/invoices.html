@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+{% include "navbar.html" %}
+
+<div class="container mt-5">
+  <table class="table table-sm table-condensed table-striped table-hover">
+      <thead>
+          <th>No.</th>
+          <th>Invoice Number</th>
+          <th>Status</th>
+          <th>Date Created</th>
+          <th>Actions</th>
+      </thead>
+      <tbody>
+          {% for invoice in invoices %}
+          <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ invoice.invoice_number }}</td>
+              <td>{{ invoice.status }}</td>
+              <td>{{ invoice.date_created }}</td>
+              <td>
+                <a href="{{ url_for('get_invoice_details', invoice_number=invoice.invoice_number) }}" class="btn btn-sm btn-outline-info">Details</a>
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+</div>
+
+{% endblock %}

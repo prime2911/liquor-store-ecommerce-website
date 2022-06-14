@@ -1,10 +1,10 @@
-from flask import render_template, request, redirect, session, url_for, flash, current_app
+from flask import render_template, request, redirect, session, url_for, flash
 from flask_login import login_required, current_user, login_user, logout_user
-import secrets, os
+import secrets
 
-from shop import db, app, photos, search, bcrypt, login_manager
+from shop import db, app, photos, bcrypt
 from .forms import CustomerRegistrationForm, CustomerLoginForm
-from .models import Customer
+from .models import Customer, Invoice
 
 
 @app.route("/customers/register", methods=["GET", "POST"])
@@ -62,3 +62,61 @@ def customer_logout():
     logout_user()
 
     return redirect(url_for("home"))
+
+@app.route("/order", methods=["GET"])
+@login_required
+def place_order():
+    if current_user.is_authenticated:
+        customer_id = current_user.id
+        invoice_number = secrets.token_hex(5)
+        try:
+            invoice = Invoice(
+                invoice_number=invoice_number,
+                customer_id=customer_id,
+                invoice_details=session["shopping_cart"]
+            )
+
+            db.session.add(invoice)
+            db.session.commit()
+            session.pop("shopping_cart", None)
+            flash("Your order has been sent!", category="success")
+
+            return redirect(url_for("get_invoice_details", invoice_number=invoice_number))
+            
+        except Exception as e:
+            print(e)
+            flash("There was an error!", category="danger")
+
+            return redirect(url_for("get_cart"))
+
+@app.route("/invoices", methods=["GET"])
+@login_required
+def get_invoices():
+    if current_user.is_authenticated:
+        customer_id = current_user.id
+        invoices = Invoice.query.filter_by(customer_id=customer_id).all()
+    else:
+        return redirect(url_for("customer_login"))
+
+    return render_template("customers/invoices.html", title="My Invoices", invoices=invoices)
+
+@app.route("/invoices/<invoice_number>", methods=["GET"])
+@login_required
+def get_invoice_details(invoice_number):
+    if current_user.is_authenticated:
+        subtotal = 0
+        grand_total = 0
+        customer_id = current_user.id
+        customer = Customer.query.filter_by(id=customer_id).first()
+        invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer_id=customer_id).first()
+
+        for product in invoice.invoice_details.values():
+            discount = (product["discount"] / 100) * float(product["price"])
+            subtotal += float(product["price"]) * int(product["quantity"])
+            subtotal -= discount
+            tax = "%.2f" % (0.1 * float(subtotal))
+            grand_total = float("%.2f" % (1.1 * subtotal))
+    else:
+        return redirect(url_for("customer_login"))
+
+    return render_template("customers/invoice_details.html", title="Invoice Details", invoice_number=invoice_number, tax=tax, grand_total=grand_total, customer=customer, invoice=invoice)
