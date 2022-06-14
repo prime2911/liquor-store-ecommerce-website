@@ -73,7 +73,7 @@ def add_brand():
         flash(f"Brand \"{brand_name}\" added to the database!", category="success")
         db.session.commit()
         
-        return redirect(url_for("add_brand"))
+        return redirect(url_for("brands"))
 
     return render_template("products/add-brand.html", title="Add Brand")
 
@@ -110,7 +110,7 @@ def delete_brand(id):
         flash("Brand deleted!", category="success")
         db.session.commit()
 
-        return redirect(url_for("admin"))
+        return redirect(url_for("brands"))
 
     flash("Delete unsuccessful!", category="danger")
 
@@ -131,7 +131,7 @@ def add_category():
         flash(f"Category \"{category_name}\" added to the database!", category="success")
         db.session.commit()
         
-        return redirect(url_for("add_category"))
+        return redirect(url_for("categories"))
 
     return render_template("products/add-category.html", title="Add Category")
 
@@ -168,7 +168,7 @@ def delete_category(id):
         flash("Category deleted!", category="success")
         db.session.commit()
 
-        return redirect(url_for("admin"))
+        return redirect(url_for("categories"))
 
     flash("Delete unsuccessful!", category="danger")
 
@@ -245,10 +245,10 @@ def update_product(id):
 
         if request.files.get("image"):
             try:
-                os.unlink(os.path.join(current_app.root_path, "static/images/products" + product.image))
-                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
+                os.unlink(os.path.join(current_app.root_path, "static/images/products/" + product.image))
+                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")[9:]
             except:
-                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")
+                product.image = photos.save(request.files.get("image"), folder="products", name=f"{secrets.token_hex(10)}.")[9:]
 
         db.session.commit()
         flash("Product updated!", category="success")

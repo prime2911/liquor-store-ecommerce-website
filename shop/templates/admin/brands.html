@@ -20,7 +20,7 @@
         <li class="nav-item">
           <a class="nav-link" href="/categories">Categories</a>
         </li>
-        <li class="nav-item dropdown">
+        <!-- <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Dropdown link
           </a>
@@ -29,12 +29,12 @@
             <a class="dropdown-item" href="#">Another action</a>
             <a class="dropdown-item" href="#">Something else here</a>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
   </nav>
 </div>
-<div class="container mt-5">
+<div class="container mt-3">
   <a href="{{ url_for('add_brand') }}" class="btn btn-sm btn-success mb-3">Add Brand</a>
   <table class="table table-sm table-condensed table-striped table-hover">
       <thead>
@@ -69,8 +69,8 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancel</button>
-                      <form action="{{ url_for('delete_brand', id=brand.id) }}" method="get">
-                        <button type="button" class="btn btn-sm btn-danger">Delete Brand</button>
+                      <form action="{{ url_for('delete_brand', id=brand.id) }}" method="POST">
+                        <button type="submit" class="btn btn-sm btn-danger">Delete Brand</button>
                       </form>
                     </div>
                   </div>
