@@ -1,6 +1,7 @@
-from flask import render_template, request, redirect, session, url_for, flash
+from flask import render_template, request, redirect, session, url_for, flash, make_response
 from flask_login import login_required, current_user, login_user, logout_user
 import secrets
+import pdfkit
 
 from shop import db, app, photos, bcrypt
 from .forms import CustomerRegistrationForm, CustomerLoginForm
@@ -107,7 +108,6 @@ def get_invoice_details(invoice_number):
         subtotal = 0
         grand_total = 0
         customer_id = current_user.id
-        customer = Customer.query.filter_by(id=customer_id).first()
         invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer_id=customer_id).first()
 
         for product in invoice.invoice_details.values():
@@ -119,4 +119,34 @@ def get_invoice_details(invoice_number):
     else:
         return redirect(url_for("customer_login"))
 
-    return render_template("customers/invoice_details.html", title="Invoice Details", invoice_number=invoice_number, tax=tax, grand_total=grand_total, customer=customer, invoice=invoice)
+    return render_template("customers/invoice_details.html", title="Invoice Details", tax=tax, grand_total=grand_total, invoice=invoice)
+
+@app.route("/export-invoice/<invoice_number>", methods=["POST"])
+@login_required
+def export_invoice(invoice_number):
+    if current_user.is_authenticated:
+        subtotal = 0
+        grand_total = 0
+        customer_id = current_user.id
+        if request.method == "POST":
+            customer = Customer.query.filter_by(id=customer_id).first()
+            invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer_id=customer_id).first()
+
+            for product in invoice.invoice_details.values():
+                discount = (product["discount"] / 100) * float(product["price"])
+                subtotal += float(product["price"]) * int(product["quantity"])
+                subtotal -= discount
+                tax = "%.2f" % (0.1 * float(subtotal))
+                grand_total = float("%.2f" % (1.1 * subtotal))
+
+            rendered_template = render_template("customers/invoice_pdf.html", title="Invoice Details", invoice_number=invoice_number, tax=tax, grand_total=grand_total, customer=customer, invoice=invoice)
+            config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
+            pdf = pdfkit.from_string(rendered_template, False, configuration=config)
+            response = make_response(pdf)
+
+            response.headers["content-Type"] = "application/pdf"
+            response.headers["content-Disposition"] = f"inline: filename={invoice_number}.pdf"
+
+            return response
+        
+    return redirect(url_for("get_invoice_details"))
