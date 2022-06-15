@@ -146,8 +146,10 @@ def export_invoice(invoice_number):
                 grand_total = float("%.2f" % (1.1 * subtotal))
 
             rendered_template = render_template("customers/invoice_pdf.html", title="Invoice Details", tax=tax, grand_total=grand_total, customer=customer, invoice=invoice)
+            print(rendered_template)
             config = pdfkit.configuration(wkhtmltopdf="C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe")
-            pdf = pdfkit.from_string(rendered_template, False, configuration=config)
+            options = {"encoding": "UTF-8"}
+            pdf = pdfkit.from_string(rendered_template, False, configuration=config, options=options)
             response = make_response(pdf)
 
             response.headers["content-Type"] = "application/pdf"
