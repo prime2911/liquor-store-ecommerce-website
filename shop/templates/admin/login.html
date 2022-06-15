@@ -15,7 +15,10 @@
           {{ render_field(form.email, class="form-control") }}
           {{ render_field(form.password, class="form-control") }}
         </dl>
-        <p><input type="submit" value="Login" class="btn btn-primary mt-2" /></p>
+        <p>
+          <input type="submit" value="Login" class="btn btn-primary mt-2" />
+          <a href="{{ url_for('customer_login') }}" class="btn btn-info mt-2 float-right">Customer Login</a>
+        </p>
       </form>
     </div>
     <div class="col-md-4"></div>

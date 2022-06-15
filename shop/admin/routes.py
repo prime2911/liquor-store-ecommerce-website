@@ -59,7 +59,7 @@ def register():
 
         return redirect(url_for("login"))
 
-    return render_template("admin/register.html", form=form, title="Register")
+    return render_template("admin/register.html", form=form, title="Admin Register")
 
 
 @app.route("/login", methods=["GET", "POST"])
@@ -78,4 +78,4 @@ def login():
         else:
             flash("Password is incorrect!", category="danger")
 
-    return render_template("admin/login.html", form=form, title="Login")
+    return render_template("admin/login.html", form=form, title="Admin Login")
