@@ -43,19 +43,22 @@ def customer_register():
 def customer_login():
     form = CustomerLoginForm()
 
-    if form.validate_on_submit():
-        customer = Customer.query.filter_by(email=form.email.data).first()
-        
-        if customer and bcrypt.check_password_hash(customer.password, form.password.data):
-            login_user(customer)
-            flash(f"You are now logged it, {customer.name}", category="success")
-            next = request.args.get("next")
+    if current_user.is_authenticated:
+        return redirect(url_for("home"))
+    else:
+        if form.validate_on_submit():
+            customer = Customer.query.filter_by(email=form.email.data).first()
+            
+            if customer and bcrypt.check_password_hash(customer.password, form.password.data):
+                login_user(customer)
+                flash(f"You are now logged it, {customer.name}", category="success")
+                next = request.args.get("next")
 
-            return redirect(next or url_for("home"))
+                return redirect(next or url_for("home"))
 
-        flash("Incorrect credentials!", category="danger")
+            flash("Incorrect credentials!", category="danger")
 
-        return redirect(url_for("customer_login"))
+            return redirect(url_for("customer_login"))
 
     return render_template("customers/login.html", title="User Login", form=form)
 
