@@ -31,7 +31,7 @@ def filter_by_brand(id):
     page = request.args.get("page", default=1, type=int)
     # per_page = 3
     brand = Brand.query.filter_by(id=id).first_or_404()
-    products = Product.query.filter(Product.stock > 0).filter_by(brand = brand).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
+    products = Product.query.filter(Product.stock > 0).filter_by(brand=brand).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
     # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
     # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
@@ -42,7 +42,7 @@ def filter_by_category(id):
     page = request.args.get("page", default=1, type=int)
     # per_page = 3
     category = Category.query.filter_by(id=id).first_or_404()
-    products = Product.query.filter(Product.stock > 0).filter_by(category = category).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
+    products = Product.query.filter(Product.stock > 0).filter_by(category=category).order_by(Product.id.desc()).paginate(page=page, per_page=items_per_page)
     # brands = Brand.query.join(Product, (Brand.id == Product.brand_id)).all()
     # categories = Category.query.join(Product, (Category.id == Product.category_id)).all()
 
