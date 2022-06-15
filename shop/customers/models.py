@@ -43,8 +43,11 @@ class Invoice(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     invoice_number = db.Column(db.String(20), unique=True, nullable=False)
     status = db.Column(db.String(20), default="Pending", nullable=False)
-    customer_id = db.Column(db.Integer, unique=False, nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    
+    customer_id = db.Column(db.Integer, db.ForeignKey("customer.id"), unique=False, nullable=False)
+    customer = db.relationship("Customer", backref=db.backref("customers", lazy=True))
+
     invoice_details = db.Column(JsonDict)
 
     def __repr__(self):

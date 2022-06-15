@@ -96,7 +96,8 @@ def place_order():
 def get_invoices():
     if current_user.is_authenticated:
         customer_id = current_user.id
-        invoices = Invoice.query.filter_by(customer_id=customer_id).all()
+        customer = Customer.query.filter_by(id=customer_id).first()
+        invoices = Invoice.query.filter_by(customer=customer).all()
     else:
         return redirect(url_for("customer_login"))
 
@@ -110,7 +111,7 @@ def get_invoice_details(invoice_number):
         grand_total = 0
         customer_id = current_user.id
         customer = Customer.query.filter_by(id=customer_id).first()
-        invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer_id=customer_id).first()
+        invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer=customer).first()
 
         for product in invoice.invoice_details.values():
             discount = (product["discount"] / 100) * float(product["price"])
@@ -132,7 +133,7 @@ def export_invoice(invoice_number):
         customer_id = current_user.id
         if request.method == "POST":
             customer = Customer.query.filter_by(id=customer_id).first()
-            invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer_id=customer_id).first()
+            invoice = Invoice.query.filter_by(invoice_number=invoice_number).filter_by(customer=customer).first()
 
             for product in invoice.invoice_details.values():
                 discount = (product["discount"] / 100) * float(product["price"])
