@@ -66,16 +66,31 @@ def register():
 def login():
     form = LoginForm(request.form)
 
-    if request.method == "POST" and form.validate():
-        user = User.query.filter_by(email=form.email.data).first()
+    if "email" not in session:
+        if request.method == "POST" and form.validate():
+            user = User.query.filter_by(email=form.email.data).first()
 
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            session["email"] = form.email.data
-            flash(f"Welcome {user.name}! You are logged in now!",
-                  category="success")
+            if user and bcrypt.check_password_hash(user.password, form.password.data):
+                session["email"] = form.email.data
+                flash(f"Welcome {user.name}! You are logged in now!",
+                    category="success")
 
-            return redirect(request.args.get("next") or url_for("admin"))
-        else:
-            flash("Password is incorrect!", category="danger")
+                return redirect(request.args.get("next") or url_for("admin"))
+            else:
+                flash("Password is incorrect!", category="danger")
+    
+    else:
+        return redirect(url_for("admin"))
 
     return render_template("admin/login.html", form=form, title="Admin Login")
+
+@app.route("/logout", methods=["GET"])
+def logout():
+    try:
+        session.pop("email", None)
+
+        return redirect(url_for("login"))
+    except Exception as e:
+        print(e)
+
+        return redirect(url_for("admin"))
