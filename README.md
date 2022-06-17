@@ -5,7 +5,8 @@ A liquor store eCommerce website made with Python and Flask
 ## Requirements
 * Python 3.8 or higher.
 * A stable Internet connection.
-* Connection to a MySQL Server (e.g. using phpMyAdmin with XAMPP)
+* Connection to a MySQL Server (e.g. using phpMyAdmin with XAMPP).
+* (Optional) [wkhtmltopdf](https://wkhtmltopdf.org/downloads.html) is installed to be able to export HTML files as PDFs.
 
 
 ## Installation
@@ -22,4 +23,9 @@ A liquor store eCommerce website made with Python and Flask
 * **Step 3:**
     - Run `pip install -r requirements.txt` to install the dependencies.
     - After the installation process is finished, run `main.py`.
+    - If there are errors, open `flask_uploads.py` look for the line `from werkzeug import secure_filename, FileStorage`, replace it with the following:
+    ```
+    from werkzeug.utils import secure_filename
+    from werkzeug.datastructures import FileStorage
+    ```
     - The website's URL is http://localhost:5000.
